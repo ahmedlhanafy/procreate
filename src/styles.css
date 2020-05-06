@@ -1,9 +1,12 @@
-.App {
-  font-family: sans-serif;
-  text-align: center;
-}
-
 body {
+  font-family: sans-serif;
   margin: 0px;
   color: white;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  background-image: radial-gradient(rgb(54, 54, 58), rgb(18, 18, 18));
+  overflow-y: auto;
 }
