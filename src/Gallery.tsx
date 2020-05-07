@@ -1,11 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
-import { ImageData } from "./types";
 import { useParams } from "react-router-dom";
 import { ImageView } from "./components/ImageViewer";
 import { RenameView } from "./components/RenameView";
-import { TopBar } from "./TopBar";
+import { TopBar } from "./components/TopBar";
 import { IoIosOptions, IoIosFolderOpen, IoIosBrush } from "react-icons/io";
 import { MenuTitle, Menu, MenuRow } from "./components/Menu";
 import { IconType } from "react-icons/lib/cjs";
@@ -63,18 +62,13 @@ export function Gallery() {
           </AnimatePresence>
         </TopBar>
 
-        {id ? (
-          <ImageView id={id} />
-        ) : (
-          <>
-            <ImagesWrapper>
-              {images.map((image) => (
-                <ImageCell id={image.id} key={image.id} />
-              ))}
-            </ImagesWrapper>
-            <AnimatePresence>{renameId && <RenameView key="rename-view" id={renameId} />}</AnimatePresence>
-          </>
-        )}
+        <ImagesWrapper>
+          {images.map((image) => (
+            <ImageCell id={image.id} key={image.id} />
+          ))}
+        </ImagesWrapper>
+        <AnimatePresence>{renameId && <RenameView key="rename-view" id={renameId} />}</AnimatePresence>
+        <AnimatePresence>{id && <ImageView key="rename-view" id={id} />}</AnimatePresence>
 
         <Menu open={displayedMenuIndex === 0} x={x} y={y} onClose={handleMenuClose}>
           <MenuTitle animate>Import</MenuTitle>

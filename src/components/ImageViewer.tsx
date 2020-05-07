@@ -14,7 +14,7 @@ export function ImageView({ id }: { id: string }) {
   );
 
   return (
-    <FullScreenImageContainer>
+    <FullScreenImageContainer initial={{ backgroundColor: 'transparent' }} exit={{ backgroundColor: 'transparent' }} animate={{ backgroundColor: 'black' }}>
       <FullScreenImage height={height} width={width} animate layoutId={data.url} src={data.url} />
     </FullScreenImageContainer>
   );
@@ -24,10 +24,14 @@ const FullScreenImageContainer = styled(motion.div)`
   width: 100vw;
   height: 100vh;
   display: flex;
-  background: black;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 `;
 
 const FullScreenImage = styled(motion.img)<{ width: number; height: number }>`

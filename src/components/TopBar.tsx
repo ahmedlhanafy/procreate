@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { BlurView } from "./components/BlurView";
+import { BlurView } from "./BlurView";
 
 type Props = { children?: React.ReactNode };
 
