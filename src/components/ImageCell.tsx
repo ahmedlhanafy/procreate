@@ -7,12 +7,12 @@ import { Link, useHistory } from "react-router-dom";
 export function ImageCell({ id }: { id: string }) {
   const history = useHistory();
   const data = getImage(id);
-  const { author, download_url, height, width, id: imageId } = data;
+  const { author, url, height, width, id: imageId } = data;
   const size = calculateAspectRatioFit(width, height, 200, 200);
 
   return (
     <ImageCellWrapper to={`/${imageId}`}>
-      <Image animate layoutId={download_url} height={size.height} width={size.width} src={download_url} />
+      <Image animate layoutId={url} height={size.height} width={size.width} src={url} />
       <TextContainer
         onClick={(e) => {
           e.preventDefault();
@@ -30,12 +30,12 @@ export function ImageCell({ id }: { id: string }) {
 
 export function ImageContainer({ id, onClick }: { onClick?: () => void; id: string }) {
   const data = getImage(id);
-  const { download_url, height, width } = data;
+  const { url, height, width } = data;
   const size = calculateAspectRatioFit(width, height, 200, 200);
 
   return (
     <ImageCellWrapper2 onClick={onClick} width={width}>
-      <Image animate layoutId={download_url} height={size.height} width={size.width} src={download_url} />
+      <Image animate layoutId={url} height={size.height} width={size.width} src={url} />
     </ImageCellWrapper2>
   );
 }

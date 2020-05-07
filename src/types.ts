@@ -4,5 +4,4 @@ export type ImageData = {
   width: number;
   height: number;
   url: string;
-  download_url: string;
 };

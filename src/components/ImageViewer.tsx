@@ -15,7 +15,7 @@ export function ImageView({ id }: { id: string }) {
 
   return (
     <FullScreenImageContainer>
-      <FullScreenImage height={height} width={width} animate layoutId={data.download_url} src={data.download_url} />
+      <FullScreenImage height={height} width={width} animate layoutId={data.url} src={data.url} />
     </FullScreenImageContainer>
   );
 }
