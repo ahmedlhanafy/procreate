@@ -1,7 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-import { useOnClickOutside } from "./hooks/useClickOutside";
+import { useOnClickOutside } from "../hooks/useClickOutside";
+import { BlurView } from "./BlurView";
 
 type MenuProps = {
   x: number;
@@ -14,19 +15,20 @@ type MenuProps = {
 };
 
 export function Menu(props: MenuProps) {
-  const { x = 0, y = 0, height = 170, width = 260, children, open = true, onClose = () => {} } = props;
+  const { x = 0, y = 0, width = 280, children, open = true, onClose = () => {} } = props;
   const ref = React.useRef<HTMLDivElement>();
-
+  const xOffset = x + width - window.innerWidth;
+  
   useOnClickOutside(ref, onClose);
 
   return (
     <AnimatePresence>
       {open && (
         <>
-          <MenuBeak x={x} y={y - 8} layoutId="menuBeak" animate>
+          <MenuBeak x={x - 12} y={y + 14} layoutId="menuBeak" animate>
             <BlurView />
           </MenuBeak>
-          <MenuWrapper ref={ref} animate layoutId="menu" width={width} x={x} y={y}>
+          <MenuWrapper ref={ref} animate layoutId="menu" width={width} x={x - (xOffset < 0 ? xOffset / 2 : 0)} y={y + 22}>
             <BlurView />
             {children}
           </MenuWrapper>
@@ -68,27 +70,16 @@ const MenuBeak = styled(motion.div)<{ x: number; y: number }>`
   `}
 `;
 
-export const BlurView = styled(motion.div)`
-  backdrop-filter: blur(20px);
-  background: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`;
-
 export const MenuTitle = styled(motion.h2)`
   color: white;
   margin: 0;
-  padding: 8px;
+  padding: 16px;
   align-self: start;
-z-index: 1;
+  z-index: 1;
 `;
 
 export const MenuRow = styled(motion.span)`
   color: rgba(255, 255, 255, 0.7);
-  background-color: rgba(0, 0, 0, 0.7);
   height: 42px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   font-size: 16px;

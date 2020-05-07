@@ -1,17 +1,16 @@
 import * as React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { calculateAspectRatioFit, getRandomImages } from "./utils";
-import { useParams } from "react-router";
+import { calculateAspectRatioFit, getImage } from "../utils";
 
 export function ImageView({ id }: { id: string }) {
-  const data = getRandomImages().find((image) => image.id === id);
+  const data = getImage(id);
 
   const { height, width } = calculateAspectRatioFit(
     data.width,
     data.height,
     window.screen.width,
-    window.screen.height - 100
+    window.screen.height + 200
   );
 
   return (

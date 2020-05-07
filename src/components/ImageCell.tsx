@@ -1,48 +1,46 @@
 import * as React from "react";
 import styled from "styled-components";
-import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
-import { ImageData } from "./types";
-import { getRandomImages, calculateAspectRatioFit } from "./utils";
-import { Link, useParams } from "react-router-dom";
-import { ImageView } from "./ImageViewer";
+import { motion } from "framer-motion";
+import { getImage, calculateAspectRatioFit } from "../utils";
+import { Link, useHistory } from "react-router-dom";
 
-export function ImageCell({ id, style }: { id: string; style?: React.CSSProperties }) {
-  const data = getRandomImages().find((i) => i.id === id);
+export function ImageCell({ id }: { id: string }) {
+  const history = useHistory();
+  const data = getImage(id);
   const { author, download_url, height, width, id: imageId } = data;
   const size = calculateAspectRatioFit(width, height, 200, 200);
 
   return (
-    <ImageCellWrapper to={`/${imageId}`} style={style}>
+    <ImageCellWrapper to={`/${imageId}`}>
       <Image animate layoutId={download_url} height={size.height} width={size.width} src={download_url} />
-      <ImageName to={`/rename/${imageId}`}>{author}</ImageName>
-      <ImageSize>
-        {width}x{height}px
-      </ImageSize>
+      <TextContainer
+        onClick={(e) => {
+          e.preventDefault();
+          history.push(`/rename/${imageId}`);
+        }}
+      >
+        <ImageName>{author}</ImageName>
+        <ImageSize>
+          {width}x{height}px
+        </ImageSize>
+      </TextContainer>
     </ImageCellWrapper>
   );
 }
 
-export function ImageContainer({
-  id,
-  style,
-  onClick
-}: {
-  onClick?: () => void;
-  id: string;
-  style?: React.CSSProperties;
-}) {
-  const data = getRandomImages().find((i) => i.id === id);
-  const { author, download_url, height, width, id: imageId } = data;
+export function ImageContainer({ id, onClick }: { onClick?: () => void; id: string }) {
+  const data = getImage(id);
+  const { download_url, height, width } = data;
   const size = calculateAspectRatioFit(width, height, 200, 200);
 
   return (
-    <ImageCellWrapper2 onClick={onClick} style={style}>
+    <ImageCellWrapper2 onClick={onClick} width={width}>
       <Image animate layoutId={download_url} height={size.height} width={size.width} src={download_url} />
     </ImageCellWrapper2>
   );
 }
 
-const ImageCellWrapper2 = styled.div`
+const ImageCellWrapper2 = styled.div<{ width: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,12 +62,18 @@ const ImageCellWrapper = styled(Link)`
   justify-content: flex-end;
 `;
 
-const ImageName = styled(Link)`
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-top: 12px;
+`;
+
+const ImageName = styled.h2`
   font-weight: bold;
   font-size: 16px;
   color: white;
   text-decoration: none;
+  margin: 0;
 `;
 
 const ImageSize = styled.span`

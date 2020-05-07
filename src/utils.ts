@@ -1,12 +1,15 @@
 import { ImageData } from "./types";
 
 export function calculateAspectRatioFit(srcWidth: number, srcHeight: number, maxWidth: number, maxHeight: number) {
-    var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-  
-    return { width: srcWidth * ratio, height: srcHeight * ratio };
-  }
+  var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
 
-export function getRandomImages(): ImageData[] {
+  return { width: srcWidth * ratio, height: srcHeight * ratio };
+}
+export function getImage(id: string): ImageData {
+  return getImages().find((image) => image.id === id);
+}
+
+export function getImages(): ImageData[] {
   return [
     {
       id: "0",
