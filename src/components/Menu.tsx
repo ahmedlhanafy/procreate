@@ -28,7 +28,7 @@ export function Menu(props: MenuProps) {
           <MenuBeak x={x - 12} y={y + 14} layoutId="menuBeak" animate>
             <BlurView />
           </MenuBeak>
-          <MenuWrapper ref={ref} animate layoutId="menu" width={width} x={x - (xOffset < 0 ? xOffset / 2 : 0)} y={y + 22}>
+          <MenuWrapper ref={ref} animate layoutId="menu" width={width} x={x - (xOffset >= 0 ? xOffset / 2 : 0)} y={y + 22}>
             <BlurView />
             {children}
           </MenuWrapper>
